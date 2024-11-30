@@ -3,6 +3,7 @@
 Demo video: https://youtu.be/GwC0HGUmS_A
 Recommended local host UI for easier changes.
 Heroku: V8 https://ml-pipeline-minst-y3t2-0cce1be662a7.herokuapp.com/
+Locust report: Check root folder locust_report.html
 
 ## Overview
 This Flask-based web application demonstrates an end-to-end Machine Learning pipeline using the MNIST dataset. The app allows users to:
@@ -81,7 +82,7 @@ The app is deployed on Heroku and accessible at:
 ### 4. **Performance Testing**
 - Simulate multiple requests to evaluate app latency and scalability.
 - Results available for review.
-- python locustfile.py use the upload link as the host
+-  Test prompt: locust -f locustfile.py use the upload link as the host
 
 ## Folder Structure
 ```
