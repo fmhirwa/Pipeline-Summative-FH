@@ -65,7 +65,23 @@
                 </tbody>                
             </table>
         </div>
+        <!--
+        <h3>Accuracy Plot</h3>
+        <img src="/output_plots/accuracy_plot.png" alt="accuracy_plot">
 
+        <h3>Confusion Matrix</h3>
+        <img src="/output_plots/confusion_matrix.png" alt="confusion_matrix">
+        
+        --> 
+
+        <div class="mt-5">
+            <h3>Accuracy Plot</h3>
+            <img src="{{ url_for('static', filename='plots/accuracy_plot.png') }}" alt="Accuracy Plot">
+    
+            <h3 class="mt-4">Confusion Matrix</h3>
+            <img src="{{ url_for('static', filename='plots/confusion_matrix.png') }}" alt="Confusion Matrix">
+        </div>
+        
         <div class="mt-4 text-center">
             <a href="/" class="btn btn-primary">Back to Home</a>
         </div>

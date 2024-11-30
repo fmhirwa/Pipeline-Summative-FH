@@ -134,6 +134,10 @@ def evaluate():
         recall = recall_score(test_labels, predicted_classes, average='weighted')
         f1 = f1_score(test_labels, predicted_classes, average='weighted')
         conf_matrix = confusion_matrix(test_labels, predicted_classes)
+        # Plot 1
+        #plot_path = plot_per_class_metrics(test_labels, predicted_classes, class_names)
+        # Plot 2
+        #misclassified_plot_path = plot_misclassified_images(test_images, test_labels, predicted_classes, class_names)
 
         # Pass the results to the template
         return render_template('evaluate_results.html', 
@@ -144,6 +148,69 @@ def evaluate():
                                confusion_matrix=conf_matrix.tolist())
 
     return render_template('evaluate.html')
+"""
+    import matplotlib.pyplot as plt
+
+    def plot_per_class_metrics(test_labels, y_pred_classes, class_names, output_dir='./static/plots'):
+        from sklearn.metrics import precision_recall_fscore_support
+        import os
+
+        # Calculate metrics
+        precision, recall, f1, _ = precision_recall_fscore_support(test_labels, y_pred_classes, labels=range(len(class_names)))
+
+        # Create the plot
+        x = np.arange(len(class_names))
+        width = 0.25
+        plt.figure(figsize=(10, 6))
+        plt.bar(x - width, precision, width, label='Precision')
+        plt.bar(x, recall, width, label='Recall')
+        plt.bar(x + width, f1, width, label='F1-Score')
+        plt.xlabel('Classes')
+        plt.ylabel('Scores')
+        plt.title('Per-Class Metrics (Precision, Recall, F1-Score)')
+        plt.xticks(x, class_names)
+        plt.legend()
+        plt.grid(axis='y')
+        plt.tight_layout()
+
+        # Save plot
+        os.makedirs(output_dir, exist_ok=True)
+        plot_path = os.path.join(output_dir, 'per_class_metrics.png')
+        plt.savefig(plot_path)
+        plt.close()
+        return plot_path
+
+    # Call the function 
+    plot_path = plot_per_class_metrics(test_labels, predicted_classes, class_names)
+
+    def plot_misclassified_images(test_images, test_labels, y_pred_classes, class_names, num_images=10, output_dir='./static/plots'):
+
+        # Find misclassified indices
+        misclassified_indices = np.where(test_labels != y_pred_classes)[0]
+
+        # Select a subset to display
+        num_images = min(num_images, len(misclassified_indices))
+        selected_indices = np.random.choice(misclassified_indices, num_images, replace=False)
+
+        # Plot the images
+        plt.figure(figsize=(12, 6))
+        for i, idx in enumerate(selected_indices):
+            plt.subplot(2, (num_images + 1) // 2, i + 1)
+            plt.imshow(test_images[idx].reshape(28, 28), cmap='gray')
+            plt.title(f"True: {class_names[test_labels[idx]]}\nPred: {class_names[y_pred_classes[idx]]}")
+            plt.axis('off')
+        plt.tight_layout()
+
+        # Save plot
+        os.makedirs(output_dir, exist_ok=True)
+        plot_path = os.path.join(output_dir, 'misclassified_examples.png')
+        plt.savefig(plot_path)
+        plt.close()
+        return plot_path
+
+    # Call the function in the evaluate route
+    misclassified_plot_path = plot_misclassified_images(test_images, test_labels, predicted_classes, class_names)
+"""
 
 
 if __name__ == '__main__':
